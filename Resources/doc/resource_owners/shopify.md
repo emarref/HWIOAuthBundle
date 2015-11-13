@@ -30,7 +30,10 @@ hwi_oauth:
 
 Alternatively, if you'd like to allow the visitor to connect to any shop, the configuration is slightly more complex.
 
-First, create a Shopify resource owner by using the provided factory:
+As the visitor might connect to any shop, the `base_url` configuration must be provided at runtime, rather than
+hard-coded in configuration.
+
+First, create a Shopify resource owner service by using the provided factory:
 
 ```yaml
 # app/config/services.yml
@@ -50,7 +53,7 @@ services:
             - @hwi_oauth.storage.session
 ```
 
-Next, configure your Shopify resource owner with the HWIOAuthBundle, prodiving your new service as the resource owner:
+Next, configure your Shopify resource owner with the HWIOAuthBundle, providing your new service as the resource owner:
 
 ```yaml
 # app/config/config.yml
@@ -66,7 +69,7 @@ gather that information first, and put it into the session. The easiest way to d
 the `SessionConnectController::redirectToServiceAction()` action.
 
 ```yaml
-# app/config.routing.yml
+# app/config/routing.yml
 
 shopify_connect:
     path: /connect/{service}
@@ -77,11 +80,11 @@ shopify_connect:
         session_parameters: [shopify_shop]
 ```
 
-This will take any request query parameter listed in the `session_parameters` variable, and pass it into the session
-under the same name.
+In this case, the value of `?shopify_shop=...` in the request query string will be passed into the session as an
+attribute of the same name.
 
-Now when you visit `/connect/shopify?shop=myshop.myshopify.com`, you will continue on to the Shopify login process as
-normal.
+Now when you visit `/connect/shopify?shopify_shop=myshop.myshopify.com`, you will continue on to the Shopify login
+process as normal.
 
 For example, given the above configuration, the below form would allow the user to enter their store name to connect.
 
@@ -91,6 +94,30 @@ For example, given the above configuration, the below form would allow the user 
     <input type="text" id="shopify_shop" name="shopify_shop" placeholder="shop.myshopify.com"/>
     <button type="submit">Go</button>
 </form>
+```
+
+### Object shop name provider
+
+If your application has the shop name available elsewhere, such as an entity, use the `ShopifyResourceOwnerObjectFactory`
+factory class to create your resource owner. Simply provide the factory a `ShopifyShopAwareInterface` object either via
+constructor or setter injection. For example:
+
+```php
+use HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\Factory\ShopifyShopAwareInterface;
+
+class MyEntity implements ShopifyShopAwareInterface
+{
+    [...]
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getShopifyShop()
+    {
+        return $this->getShopify()->getShopName();
+    }
+}
+
 ```
 
 When you're done. Continue by configuring the security layer or go back to setup more resource owners.

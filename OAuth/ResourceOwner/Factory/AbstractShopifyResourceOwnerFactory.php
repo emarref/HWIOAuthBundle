@@ -5,24 +5,10 @@ namespace HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\Factory;
 use Buzz\Client\ClientInterface;
 use HWI\Bundle\OAuthBundle\OAuth\RequestDataStorageInterface;
 use HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\ShopifyResourceOwner;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Http\HttpUtils;
 
-class ShopifyResourceOwnerFactory
+abstract class AbstractShopifyResourceOwnerFactory implements ShopifyShopAwareInterface
 {
-    /**
-     * @var SessionInterface
-     */
-    private $session;
-
-    /**
-     * @param SessionInterface $session
-     */
-    public function __construct(SessionInterface $session)
-    {
-        $this->session = $session;
-    }
-
     /**
      * @param string $shop
      * @return string
@@ -62,10 +48,10 @@ class ShopifyResourceOwnerFactory
      */
     public function get(ClientInterface $httpClient, HttpUtils $httpUtils, array $options, $name, RequestDataStorageInterface $storage)
     {
-        $shop = $this->session->get('shopify_shop');
+        $shop = $this->getShopifyShop();
 
         if (empty($shop)) {
-            throw new \RuntimeException('No shopify shop found in session.');
+            throw new \RuntimeException('No Shopify shop is available.');
         }
 
         $options = array_merge($options, [

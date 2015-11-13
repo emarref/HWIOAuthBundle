@@ -48,6 +48,8 @@
         <parameter key="hwi_oauth.resource_owner.reddit.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\RedditResourceOwner</parameter>
         <parameter key="hwi_oauth.resource_owner.salesforce.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\SalesforceResourceOwner</parameter>
         <parameter key="hwi_oauth.resource_owner.sensio_connect.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\SensioConnectResourceOwner</parameter>
+        <parameter key="hwi_oauth.resource_owner.shopify.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\ShopifyResourceOwner</parameter>
+        <parameter key="hwi_oauth.resource_owner.shopify_factory.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\Factory\ShopifyResourceOwnerFactory</parameter>
         <parameter key="hwi_oauth.resource_owner.sina_weibo.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\SinaWeiboResourceOwner</parameter>
         <parameter key="hwi_oauth.resource_owner.spotify.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\SpotifyResourceOwner</parameter>
         <parameter key="hwi_oauth.resource_owner.soundcloud.class">HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\SoundcloudResourceOwner</parameter>
@@ -144,5 +146,11 @@
                  parent="hwi_oauth.abstract_resource_owner.generic" abstract="true">
             <argument type="service" id="hwi_oauth.storage.session" />
         </service>
+
+        <!-- Resource owner factories -->
+        <service id="hwi_oauth.abstract_resource_owner_factory.shopify" class="%hwi_oauth.resource_owner.shopify_factory.class%">
+            <argument type="service" id="session"/>
+        </service>
+
     </services>
 </container>

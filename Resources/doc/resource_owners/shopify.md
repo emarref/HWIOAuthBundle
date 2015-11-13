@@ -6,9 +6,11 @@ First you will have to register your application with [Shopify](https://app.shop
 Next configure a resource owner of type `shopify` with appropriate `client_id`, `client_secret` and `scope`.
 This information can be found on the edit page for the Shopify application you just created.
 
-There are two different ways to configure Shopify for your application:
+There are two different ways to configure Shopify for your application.
 
-1. If your visitors will only ever connect to one explicit Shopify shop, configure your provider as you would any other
+### Single Shop
+
+If your visitors will only ever connect to one explicit Shopify shop, configure your provider as you would any other
 and you're done:
 
 ```yaml
@@ -24,7 +26,9 @@ hwi_oauth:
             base_url:      https://myshop.myshopify.com
 ```
 
-2. Alternatively, if you'd like to allow the visitor to connect to any shop, the configuration is slightly more complex.
+### Any Shop
+
+Alternatively, if you'd like to allow the visitor to connect to any shop, the configuration is slightly more complex.
 
 First, create a Shopify resource owner by using the provided factory:
 

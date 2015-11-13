@@ -64,6 +64,7 @@ hwi_oauth:
 - [Reddit](resource_owners/reddit.md)
 - [Salesforce](resource_owners/salesforce.md)
 - [SensioLabs Connect](resource_owners/sensio_connect.md)
+- [Shopify](resource_owners/shopify.md)
 - [Sina Weibo](resource_owners/sina_weibo.md)
 - [Spotify](resource_owners/spotify.md)
 - [Soundcloud](resource_owners/soundcloud.md)

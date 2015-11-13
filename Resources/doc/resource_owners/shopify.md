@@ -41,7 +41,7 @@ First, create a Shopify resource owner service by using the provided factory:
 services:
     acme.oauth.resource_owner.shopify:
         class:   %hwi_oauth.resource_owner.shopify.class%
-        factory: [@hwi_oauth.abstract_resource_owner_factory.shopify, get]
+        factory: [@hwi_oauth.abstract_resource_owner_factory.shopify_session, get]
         arguments:
             - @hwi_oauth.http_client
             - @security.http_utils

@@ -58,6 +58,7 @@ class Configuration implements ConfigurationInterface
             'reddit',
             'salesforce',
             'sensio_connect',
+            'shopify',
             'sina_weibo',
             'spotify',
             'soundcloud',
